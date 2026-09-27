@@ -25,10 +25,16 @@ public class Task17 {
         // 1. Calculate arithmetic mean: A = (a + b) / 2
         double arithmeticMean = (a + b) / 2.0;
 
-        // 2. Calculate harmonic mean: H = 2ab / (a + b) with zero-division validation
+        // 2. Calculate Harmonic Mean: H = 2ab / (a + b) with numerical stability check
         Double harmonicMean = null;
-        if (a != 0.0 && b != 0.0 && (a + b) != 0.0) {
-            harmonicMean = (2.0 * a * b) / (a + b);
+        double sum = a + b;
+        final double EPS = 1e-12;
+
+        if (Math.abs(a) > EPS && Math.abs(b) > EPS && Math.abs(sum) > EPS) {
+            double h = (2.0 * a * b) / sum;
+            if (!Double.isNaN(h) && !Double.isInfinite(h)) {
+                harmonicMean = h;
+            }
         }
 
         // 3. Formatted output in decimal and scientific notations
